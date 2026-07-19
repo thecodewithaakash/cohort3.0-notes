@@ -3,6 +3,9 @@ import { MyStore } from "../context/MyContext";
 
 const Contact = () => {
   console.log("Contact rendering...");
+  const data = useContext(MyStore);
+  console.log(data);
+  
 
   return (
     <div>

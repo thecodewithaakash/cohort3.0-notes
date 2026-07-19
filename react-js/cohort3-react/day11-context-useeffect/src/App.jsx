@@ -10,8 +10,11 @@ const App = () => {
 
   // const [count, setCount] = useState(0);
 
-  // context api
-  const { count, setCount } = useContext(MyStore);
+  // ### context api
+  // const { count, setCount } = useContext(MyStore);
+
+  // const data = useContext(MyStore);
+  // console.log(data); // undefined because the App component is not wrapped with ContextProvider in main.jsx, so the context value is not available here.
 
   // const [toggle, setToggle] = useState(true);
   // const [apiData, setApiData] = useState(null);
@@ -41,20 +44,39 @@ const App = () => {
       {/* you see first -> Context rendering... printed in browser console because -->  useState’s setFunction triggers re-render
              of the component where it is defined, not where it’s called.*/}
       {/*  the rendering process starts from the Context component. */}
-      <h1>Count is {count}</h1>
+      {/* <h1>Count is {count}</h1>
       <button onClick={() => setCount(count + 1)}>Increment</button>
       <Home />
       <About />
-      <Contact />
+      <Contact /> */}
 
       {/* <button onClick={() => setToggle((prev) => !prev)}>
         Change toggle state
       </button>  */}
 
-      {/* <ContextProvider>
+      {/* here below code rendering flow: App rendering... -> Context rendering... --> Home rendering --> About rendering --> Contact rendering */}
+      {/* ### Rendering flow (console output):
+
+          App rendering...
+          MyContext.jsx:8 → Context rendering...
+          Home.jsx:5 → Home rendering...
+          Home.jsx:10 → { count: 0, setCount: ƒ }
+          About.jsx:6 → About rendering...
+          About.jsx:8 → { count: 0, setCount: ƒ }
+          Contact.jsx:5 → Contact rendering...
+          Contact.jsx:7 → { count: 0, setCount: ƒ }
+
+        Explanation:
+        - The flow shows how React components re-render in sequence.
+        - Context renders first, then App, followed by Home, About, and Contact.
+        - Each child component logs both its render message and the context value { count, setCount }.
+      */}
+      <ContextProvider>
+        {/* 👉 This makes it clear: click → setCount → Context re-renders → all subscribed components re-render with new value. */}
         <Home />
         <About />
-      </ContextProvider> */}
+        <Contact />
+      </ContextProvider>
 
       {/* {toggle ? <Contact /> : <About />} */}
     </div>

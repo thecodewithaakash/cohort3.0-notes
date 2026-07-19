@@ -4,6 +4,8 @@ import { MyStore } from "../context/MyContext";
 const About = () => {
 
   console.log("About rendering...");
+  const data = useContext(MyStore);
+  console.log(data);
 
 
   // let interval = setInterval(() => {
