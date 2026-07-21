@@ -20,8 +20,8 @@ const App = () => {
   // ### understanding useEffect and re-rendering
   const [count, setCount] = useState(0);
   const [toggle, setToggle] = useState(false);
-  // const [apiData, setApiData] = useState(null);
-  // console.log("apidata", apiData);
+  const [apiData, setApiData] = useState(null);
+  console.log("apidata", apiData);
 
   // syntax: useEffect(callback, [optional dependencies array])
   // useEffect is asynchronous, it runs after the render is committed to the screen.
@@ -41,20 +41,32 @@ const App = () => {
   //   console.log("App useEffect running...");
   // }, [count]); // it runs after every render when the count state changes because the dependency array contains count.
 
-  useEffect(() => {
-    console.log("App useEffect running...");
-    console.log("heyy..");
-  }, [toggle]); // it runs after every render when the toggle state changes because the dependency array contains toggle.
+  // useEffect(() => {
+  //   console.log("App useEffect running...");
+  //   console.log("heyy..");
+  // }, [toggle]); // it runs after every render when the toggle state changes because the dependency array contains toggle.
 
-  // let getData = async () => {
-  //   let res = await axios.get("https://fakestoreapi.com/products");
-
-  //   setApiData(res.data);
-  // };
 
   // useEffect(() => {
-  //   getData();
-  // }, []);
+  //   console.log("UseEffect: App Rendering...");
+  // },[])
+
+  let getData = async () => {
+    // this code return Promsie so we need to wrap in async function.
+    let res = await axios.get("https://fakestoreapi.com/products");
+
+    // without useEffect this leads to infinite recursion so we need to wrap getData function insde useEffect
+    // due to setApiData -> triggers infinite re-rendering
+    setApiData(res.data);
+  };
+
+  // without useEffect this leads to infinite recursion so we need to wrap getData function insde useEffect
+  // getData()
+
+  useEffect(() => {
+    // // useEffect prevents infinite re-render loop
+    getData();
+  }, []);
 
   return (
     <div>
