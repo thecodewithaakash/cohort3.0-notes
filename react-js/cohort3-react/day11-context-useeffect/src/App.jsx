@@ -6,19 +6,45 @@ import { ContextProvider, MyStore } from "./context/MyContext";
 import axios from "axios";
 
 const App = () => {
+  // this will runs every time whenever the App component re-renders because it's called inside main function body of the App component.
+  // So, whenever the state changes and the component re-renders, this line will execute again.
   console.log("App rendering...");
 
   // const [count, setCount] = useState(0);
-
   // ### context api
   // const { count, setCount } = useContext(MyStore);
 
   // const data = useContext(MyStore);
   // console.log(data); // undefined because the App component is not wrapped with ContextProvider in main.jsx, so the context value is not available here.
 
-  // const [toggle, setToggle] = useState(true);
+  // ### understanding useEffect and re-rendering
+  const [count, setCount] = useState(0);
+  const [toggle, setToggle] = useState(false);
   // const [apiData, setApiData] = useState(null);
   // console.log("apidata", apiData);
+
+  // syntax: useEffect(callback, [optional dependencies array])
+  // useEffect is asynchronous, it runs after the render is committed to the screen.
+  // It does not block the browser from updating the screen.
+
+  // useEffect(() => {
+  //   console.log("App useEffect running...");
+  // }, []); // it runs only once after the first render because the dependency array is empty.
+
+  // ### but if i remove the dependency array then it will run after every render
+
+  // useEffect(() => {
+  //   console.log("App useEffect running...");
+  // }); // it runs after every render because the dependency array is not provided.
+
+  // useEffect(() => {
+  //   console.log("App useEffect running...");
+  // }, [count]); // it runs after every render when the count state changes because the dependency array contains count.
+
+  useEffect(() => {
+    console.log("App useEffect running...");
+    console.log("heyy..");
+  }, [toggle]); // it runs after every render when the toggle state changes because the dependency array contains toggle.
 
   // let getData = async () => {
   //   let res = await axios.get("https://fakestoreapi.com/products");
@@ -32,13 +58,10 @@ const App = () => {
 
   return (
     <div>
-      {/* ### understanding re-rendering */}
-      {/* <h1>Count is {count}</h1> */}
-      {/* <button onClick={() => setCount(count + 1)}>Increment</button> */}
-      {/* <Home />
-      <About />
-      <Contact /> */}
-
+      {/* rendering flow: App rendering... -> Context rendering... --> Home rendering --> About rendering --> Contact rendering */}
+      {/* <Home /> */}
+      {/* <About /> */}
+      {/* <Contact /> */}
       {/* ### understanding context api + re-rendering */}
       {/* rendering flow: context rendering... -> App rendering... --> Home rendering --> About rendering --> Contact rendering */}
       {/* you see first -> Context rendering... printed in browser console because -->  useState’s setFunction triggers re-render
@@ -49,11 +72,6 @@ const App = () => {
       <Home />
       <About />
       <Contact /> */}
-
-      {/* <button onClick={() => setToggle((prev) => !prev)}>
-        Change toggle state
-      </button>  */}
-
       {/* here below code rendering flow: App rendering... -> Context rendering... --> Home rendering --> About rendering --> Contact rendering */}
       {/* ### Rendering flow (console output):
 
@@ -71,14 +89,37 @@ const App = () => {
         - Context renders first, then App, followed by Home, About, and Contact.
         - Each child component logs both its render message and the context value { count, setCount }.
       */}
-      <ContextProvider>
-        {/* 👉 This makes it clear: click → setCount → Context re-renders → all subscribed components re-render with new value. */}
-        <Home />
-        <About />
-        <Contact />
-      </ContextProvider>
+      {/* <ContextProvider> */}
+      {/* 👉 This makes it clear: click → setCount → Context re-renders → all subscribed components re-render with new value. */}
+      {/* <Home /> */}
+      {/* <About /> */}
+      {/* <Contact /> */}
+      {/* </ContextProvider> */}
+      {/* but if i put <Contact /> here then it will not re-render during context re-render */}
+      {/* <Contact /> */}
+      {/* ### understanding useEffect and re-rendering */}
+      <h1>Count is {count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment</button> <br />
+      <button onClick={() => setToggle((prev) => !prev)}>
+        Change toggle state
+      </button>
 
-      {/* {toggle ? <Contact /> : <About />} */}
+      {/* Flow: whenever toggle changes : if toggle(true) -->  for Contact Page
+          App rendering... --> top most console --> running during rendering of App component
+          Contact rendering... -
+          ###  After render finishes, useEffect runs:
+          App useEffect running...
+          heyy..
+     */}
+      {/* 
+      ### Flow: if toggle(false) --> for About Page
+          App rendering...
+          About rendering...
+          ###  After render completes, useEffect runs:
+          App useEffect running...
+          heyy.. 
+   */}
+      {toggle ? <Contact /> : <About />}
     </div>
   );
 };
@@ -164,3 +205,38 @@ const Profile = () => {
 // - **Provider** → wraps children and passes down data via the `value` prop.
 // - **Consumer** → any component that uses `useContext(MyContext)` (or `<MyContext.Consumer>`) to access that data.
 // 👉 In short: **Provider gives, Consumer takes.**
+
+/*
+### Understanding useEffect:
+
+useEffect Hook:
+- Used for handling side effects (API calls, subscriptions, DOM updates, timers, etc.)
+
+React Component Lifecycle:
+1) Mounting phase(known as componentDidMount ) → component renders for the first time - inside render tree.
+2) Updating phase(known as componentDidUpdate ) → component re-renders(update) when state/props change.
+3) Unmounting phase(known as componentWillUnmount) → component is removed from the DOM(Tree).
+
+useEffect + Lifecycle:
+- useEffect(() => { ... }, []) → runs once after initial mount.
+- useEffect(() => { ... }, [deps]) → runs after updates when dependencies change.
+- useEffect(() => { return () => {...} }, []) → cleanup runs during unmount.
+
+Think of `useEffect` as the **bridge between React’s declarative rendering and imperative side effects**:
+
+- **Mount (first render):** `useEffect` with empty `[]` runs once → perfect for fetching data or setting up listeners.  
+- **Update (state/prop change):** `useEffect` with `[deps]` runs whenever those dependencies change → ideal for reacting to user input or prop updates.  
+- **Unmount (component removal):** the cleanup function inside `useEffect` runs → great for clearing timers, unsubscribing, or removing event listeners.  
+
+- **Mounting phase** → also called **componentDidMount** in class components (runs after first render because useEffect is asynchronous).  
+- **Updating phase** → also called **componentDidUpdate** (runs after state/prop changes).  
+- **Unmounting phase** → also called **componentWillUnmount** (runs before removal).  
+  👉  Mounting = *didMount*, Updating = *didUpdate*, Unmounting = *willUnmount*.  
+
+-  React itself controls the render lifecycle (mount, update, unmount).
+   useEffect does not change those phases — it simply runs *after render*
+   to handle side effects (like fetch, subscriptions, DOM ops).
+   So: lifecycle = React, side effects = useEffect. 
+
+
+*/

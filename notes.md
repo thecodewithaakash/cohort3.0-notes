@@ -35,3 +35,14 @@ Searched for regex `^#|^##|React|useState|useEffect|Context|Router|useRef|form|v
 14. How do you handle form validation in React?
 15. What is the difference between state updates in React and direct mutation?
 
+
+- how rendering & re-rendering works in react ?
+- is re-rendering good or bad at large scale application ? if not then how to minimize re-rendering ? if yes then how & why ?
+- when re-rendering trigger in react ? i mean how to know this given code will cause re-rendering ?
+- how to identify which react code is synchronous or asynchronous in react and how it is 
+- is context api state management or not ? 
+
+
+- https://www.reactbits.dev/get-started/index
+- react bricks
+- particles.js
