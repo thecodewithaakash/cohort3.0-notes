@@ -23,6 +23,32 @@ export const ContextProvider = ({ children }) => {
     });
   };
 
+  // ### No need for extra checks - so no need to below decrementQuantity function - above decrementQuantity is fine
+  // Because: if quantity = 0 → show "Add to Cart"
+  // Otherwise → show +/- buttons with current quantity
+
+  //   const decrementQuantity = (id) => {
+  //   setCartItems((prev) => {
+  //     return prev.map((val) => {
+  //       if (val.id === id) {
+  //         if (val.quantity > 0) {
+  //           // ✅ decrease quantity if > 0
+  //           return { ...val, quantity: val.quantity - 1 };
+  //         } else {
+  //           // ⚠️ quantity already 0
+  //           alert("This product's quantity is zero");
+  //         }
+  //       }
+  //       // return unchanged item
+  //       return val;
+  //     });
+  //   });
+  // };
+
+  const removeItems = (id) => {
+    setCartItems((prev) => prev.filter((val) => val.id !== id));
+  };
+
   return (
     <MyStore.Provider
       value={{
@@ -32,6 +58,7 @@ export const ContextProvider = ({ children }) => {
         setCartItems,
         incrementQuantity,
         decrementQuantity,
+        removeItems,
       }}
     >
       {children}

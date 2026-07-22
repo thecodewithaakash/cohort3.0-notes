@@ -2,7 +2,25 @@ import React, { useContext } from "react";
 import { Star, ShoppingCart } from "lucide-react";
 import { MyStore } from "../context/MyContext";
 
+// const ProductCard = ({ product, isInCart,setCartItems }) => {
 const ProductCard = ({ product, isInCart }) => {
+  //   const incrementQuantity = (id) => {
+  //   setCartItems((prev) => {
+  //     return prev.map((val) => {
+  //       return val.id === id ? { ...val, quantity: val.quantity + 1 } : val;
+  //     });
+  //   });
+  // };
+
+  // const decrementQuantity = (id) => {
+  //   setCartItems((prev) => {
+  //     return prev.map((val) => {
+  //       return val.id === id ? { ...val, quantity: val.quantity - 1 } : val;
+  //     });
+  //   });
+  // };
+
+  // ### wrapping and calling above things inside Context API
   let { setCartItems, incrementQuantity, decrementQuantity } =
     useContext(MyStore);
 
@@ -10,6 +28,9 @@ const ProductCard = ({ product, isInCart }) => {
     setCartItems((prev) => [...prev, { ...product, quantity: 1 }]);
     alert("Product added into cart");
   };
+
+  console.log(isInCart);
+  
 
   return (
     <div className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
@@ -54,7 +75,7 @@ const ProductCard = ({ product, isInCart }) => {
         </div>
 
         {/* Button */}
-        {isInCart ? (
+        {isInCart?.quantity > 0 ? (
           <button className="w-full bg-gray-600 flex items-center justify-center gap-5">
             <span
               onClick={() => decrementQuantity(product.id)}
@@ -72,6 +93,9 @@ const ProductCard = ({ product, isInCart }) => {
           </button>
         ) : (
           <button
+            // onClick={() =>
+            //   setCartItems((prev) => [...prev, { ...product, quantity: 1 }])
+            // }
             onClick={addToCart}
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-black py-3 font-semibold text-white transition hover:bg-gray-800"
           >

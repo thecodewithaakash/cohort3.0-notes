@@ -4,12 +4,17 @@ import Navbar from "./components/Navbar";
 import ProductCards from "./components/ProductCards";
 import CartScreen from "./pages/CartScreen";
 import { MyStore } from "./context/MyContext";
+import { LogIn } from "lucide-react";
 
 const App = () => {
-  let { isCartOpen, cartItems } = useContext(MyStore);
+  //  const [isCartOpen, setIsCartOpen] = useState(false);
+  // const [cartItems, setCartItems] = useState([]);
+  // const [productsData, setProductsData] = useState([]);
+  // console.log(productsData);
 
+  // ### Context API
+  let { isCartOpen, cartItems } = useContext(MyStore);
   const [productsData, setProductsData] = useState([]);
-  console.log(productsData);
 
   const getProductsData = async () => {
     try {
@@ -53,16 +58,34 @@ const App = () => {
 
   return (
     <div className="h-screen p-2 flex flex-col gap-4">
+      {/* <Navbar setIsCartOpen={setIsCartOpen}/> */}
       <Navbar />
 
       {isCartOpen ? (
         <div className="">
+          {/* <CartScreen cartItems={cartItems}/> */}
           <CartScreen />
         </div>
       ) : (
         <div className="grid grid-cols-4 gap-4">
           {productsData.map((elem) => {
+            // find() → returns first match, else undefined
+            // find() checks each cartItems element until a match is found
+            // - For non-matching items → returns undefined
+            // - Logs show many "undefined" because most products aren't in cart
+            // - When a match is found → returns that object (not undefined)
+            // - After match, continues checking other map iterations → again undefined
+            // ✅ So pattern looks like: many undefined → one match → many undefined
             let isInCart = cartItems.find((val) => val.id === elem.id);
+            // console.log(isInCart);
+
+            // 🔎 Why find() runs many times:
+            // - map() loops over ALL products
+            // - for each product, find() searches cartItems
+            // - if match → returns that object
+            // - if no match → returns undefined
+            // - So logs show: many undefined (not in cart) + few matches (in cart)
+            // ✅ This is expected: find() executes once per product in map
 
             return (
               // ### Why we need Unique key for Each list item ?
@@ -74,14 +97,15 @@ const App = () => {
               // which preserves component state and improves performance
 
               // ### Why index as key not prefer ?
-                // ❌ Using index as key is not recommended
-                // Because when list items change (add/remove/reorder),
-                // React reuses DOM nodes incorrectly → causes unstable rendering
-                // Component state may get mixed up or lost
-                // ✅ Better: use a unique stable identifier like elem.id
+              // ❌ Using index as key is not recommended
+              // Because when list items change (add/remove/reorder),
+              // React reuses DOM nodes incorrectly → causes unstable rendering
+              // Component state may get mixed up or lost
+              // ✅ Better: use a unique stable identifier like elem.id
 
-                // “Index keys break React’s diffing when list order changes, leading to unstable rendering and state bugs; unique IDs ensure stable updates.”
+              // “Index keys break React’s diffing when list order changes, leading to unstable rendering and state bugs; unique IDs ensure stable updates.”
 
+              // <ProductCards key={elem.id} product={elem} isInCart={isInCart} setCartItems={setCartItems} />
               <ProductCards key={elem.id} product={elem} isInCart={isInCart} />
             );
           })}

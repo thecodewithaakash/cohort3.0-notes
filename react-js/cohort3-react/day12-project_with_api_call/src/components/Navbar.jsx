@@ -1,8 +1,14 @@
 import React, { useContext } from "react";
 import { MyStore } from "../context/MyContext";
 
+// const Navbar = ({setIsCartOpen}) => {
 const Navbar = () => {
   let { setIsCartOpen } = useContext(MyStore);
+
+  // ### understanding spread operator
+  // const data = { name: "Aakash", age: 20, role: "Frontend Engineer" };
+  // const arr = { ...data, exp: "2 years+" };
+  // console.log(arr);
 
   return (
     <div className="bg-black rounded p-5 flex items-center justify-between">

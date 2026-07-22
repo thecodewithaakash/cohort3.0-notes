@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import CartCard from "../components/cartCard";
 import { MyStore } from "../context/MyContext";
 
+// const CartScreen = ({cartItems}) => {
 const CartScreen = () => {
   let { cartItems } = useContext(MyStore);
 
