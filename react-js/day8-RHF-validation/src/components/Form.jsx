@@ -57,7 +57,7 @@ const Form = ({ setUsers, setToggle }) => {
             required: "Email is required",
             // pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" },
             pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/,
               message: "Invalid email address",
             },
           })}

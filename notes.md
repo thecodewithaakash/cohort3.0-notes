@@ -1,4 +1,26 @@
 
+### Installation Guide
+- npm create vite@7
+- npm i tailwindcss @tailwindcss/vite
+
+```js
+// vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+});
+```
+
+```css
+/* index.css */
+@import "tailwindcss";
+
+```
+
 ### most used dummy api's 
 1. **JSONPlaceholder** — [https://jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com?utm_source=chatgpt.com)
 2. **DummyJSON** — [https://dummyjson.com](https://dummyjson.com?utm_source=chatgpt.com)
