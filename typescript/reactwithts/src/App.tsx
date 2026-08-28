@@ -1,9 +1,12 @@
+// rafce --> tsrafce
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import type { Product } from "./types";
 import ProductCard from "./components/ProductCard";
 
 const App = () => {
+  // <Product>[] --> Generic block
   const [productsData, setProductsData] = useState<Product[]>([]);
 
   let getData = async () => {

@@ -20,7 +20,8 @@ export interface Product {
 }
 
 export interface ApiResponseProduct {
-  data?: [];
+  // data?: [];
+  data?: Product[];
   total: number;
   skip: number;
 }

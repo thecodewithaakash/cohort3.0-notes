@@ -1,5 +1,23 @@
 import type { Product } from "../types";
 
+
+// - Use { product }: { product: Props } if you want a single product prop.
+// - Use ({ id, title, ... }: Props) if you want to destructure fields directly.
+
+// type Props = {
+//   id: number;
+//   title: string;
+//   category: string;
+//   image: string;
+//   price: number;
+//   description: string;
+//   rating: {
+//     rate: number;
+//     count: number;
+//   };
+// }
+
+// const ProductCard = ({ product }:{product:Props}) => {
 const ProductCard = ({ product }: { product: Product }) => {
   return (
     <div className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 hover:-translate-y-2">
