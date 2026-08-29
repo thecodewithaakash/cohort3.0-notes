@@ -18,6 +18,7 @@ These are the highest-yield questions. Be able to explain each one clearly and w
 10. How do you validate request data and handle errors?
 11. How do you connect Express to MongoDB using Mongoose?
 12. What are a Mongoose schema and model?
+13. HTTP vs HTTPs? 
 
 **Interview priority:** event loop -> middleware -> request data -> CRUD/status codes -> validation/errors -> MongoDB/Mongoose.
 

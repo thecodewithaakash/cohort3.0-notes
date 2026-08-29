@@ -16,6 +16,7 @@ const createNotesController = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: "bhai me nahi chal paunga..",
+      error: error,
     });
   }
 };

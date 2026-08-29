@@ -3,10 +3,13 @@ import axios from "axios";
 import NoteCard from "./components/NoteCard";
 
 const App = () => {
+  // two-way binding
   const [formValues, setFormValues] = useState({
     title: "",
     description: "",
   });
+
+  // let isDataForUpdate = null; // React doesn’t track normal variables for re‑rendering.
   const [updateNoteId, setUpdateNoteId] = useState(null);
 
   const [allNotes, setAllNotes] = useState([]);
@@ -31,6 +34,24 @@ const App = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+   //  // React doesn’t track normal variables for re‑rendering.
+    // if (isDataForUpdate) {
+    //   // api call for update note
+    //   let res = await axios.put(
+    //     `http://localhost:3000/notes/${updateNoteId}`,
+    //     formValues,
+    //   );
+    //   console.log(res);
+    //   isDataForUpdate = null;
+    // } else {
+    //   // api call for create note
+    //   let res = await axios.post(
+    //     "http://localhost:3000/notes/create",
+    //     formValues,
+    //   );
+    //   console.log(res);
+    // }
 
     if (updateNoteId) {
       // api call for update note
@@ -68,12 +89,23 @@ const App = () => {
 
   let noteForUpdate = (note) => {
     console.log(note);
+    // isDataForUpdate = note._id; // React doesn’t track normal variables for re‑rendering.
+    // console.log(isDataForUpdate);
+    
     setUpdateNoteId(note._id);
     setFormValues({
       title: note.title,
       description: note.description,
     });
   };
+
+  // console.log(isDataForUpdate); // null, becauase React doesn’t track normal variables for re‑rendering.
+  // console.log(updateNoteId);
+
+  // homework:
+    // - axios instance 
+    // - optimization where needed
+  
 
   return (
     <div className="h-screen p-5 flex flex-col gap-5">
@@ -102,6 +134,7 @@ const App = () => {
           required
         />
         <button className="bg-blue-600 text-white p-2 rounded">
+          {/* {isDataForUpdate ? "Update note" : "Add note"} */}
           {updateNoteId ? "Update note" : "Add note"}
         </button>
       </form>
