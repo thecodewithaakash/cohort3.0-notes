@@ -109,3 +109,5 @@
 
 // ### Questions:
 // - learn about programming cases like camelCase, PascalCase, snake_case, kebab-case etc ?
+// - type ceorcin mastery in JS ? 
+// - falsly & truthy values mastery in JS ? 

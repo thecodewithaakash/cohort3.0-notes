@@ -51,13 +51,14 @@ const express = require("express"); // imports the express library to use it...
 const app = express(); // `express()` returns an **instance of an Express application**.
 // console.log(app);
 
-// middleware for accepting data from frontend 
-app.use(express.json()); // parses JSON
-app.use(express.urlencoded({ extended: true })); // for form-data
+// middleware for accepting data from frontend
+// express.json() → built-in middleware that parses incoming JSON payloads (stringified) into JS objects accessible via req.body.
+
+// app.use(express.json()); // parses JSON
+// app.use(express.urlencoded({ extended: true })); // for form-data
 
 // constants
 const port = 3000;
-
 
 app.get("/", (req, res) => {
   // res.end('Hello mom!');
@@ -70,22 +71,30 @@ app.get("/", (req, res) => {
 // app.get("/") -> router
 // (req, res) => {} -> callback function (handler function)
 
-app.get('/products',(req,res) => {
+app.get("/products", (req, res) => {
   res.send([
     {
-      id:1,
-      name:"Aakash saha",
-      role:"AI Fullstack Engineer"
-    }
-  ])
-})
+      id: 1,
+      name: "Aakash saha",
+      role: "AI Fullstack Engineer",
+    },
+  ]);
+});
 
 // CRUD
-app.post('/create',(req,res) => {
+app.post("/create", (req, res) => {
   // create
+  console.log(req);
   console.log(req.body);
-  res.send("ok post")
-})
+  res.send("ok post");
+
+  // If you don’t use express.json(),
+  // the server receives raw string data in req.body.
+  // Example: '{"name":"Aakash","age":22}' (stringified JSON).
+  // You can log it directly: console.log(req.body);
+  // But it will be just a string, not a JS object.
+  // To access properties, you’d need JSON.parse(req.body).
+});
 
 app.listen(port, () =>
   console.log(`server is listening at http://localhost:${port}`),

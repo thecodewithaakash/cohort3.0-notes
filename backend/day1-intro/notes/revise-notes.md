@@ -1,0 +1,15 @@
+- internet is a access layer which delivers cloud services globally.
+- cloud is a infrastructure which provide storages,hosting,computing,networking via internet.
+- backend is proportoinal to server.
+- storage is a place where we can store data like data hosting on internet.
+- server is a machine(CPU/GPU).
+- client sends http request(JSON payload) to the server.
+- server accepts the json payload process it,perform logic operations,query from DB then return response to the client.
+- server is a machine which accepts client request, processes them and sends back responses to the client
+- API(Application programming interface) act as interface between browser/client and server.
+- internet access,storage,hosting and server communication is possible to large scale data centers which provide these services efficiently.
+- cloud --> compute,storage(hosting),networking via internet
+- CPU(Central processing unit) is used for general purpose sequential task but GPU(Graphics processing unit) is used for specialized parallel computations at scale.
+- Cores  is a independent processing unit inside a CPU which execute instructions separately, enabling true parallelism.
+- internet runs on connected optic cables globally.these optic cables carry data as light signals accross continents & oceans.
+- these optic fibre signals converted into electrical/radio signals then cell towers broadcast these signals wirelessly to mobile devices.

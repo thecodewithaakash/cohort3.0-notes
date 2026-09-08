@@ -167,6 +167,7 @@ Every value in JavaScript has a **type**. JS has two categories:
 - primitive is data that is not an object and has no methods or properties
 - primitive is immutable
 - In JavaScript, the range \(-(2^{53} - 1)\) to \(2^{53} - 1\) represents the safe integer range.
+- **In JavaScript, the safe integer range is \(-(2^{53}-1)\) to \(2^{53}-1\); beyond that, you must use `BigInt` for precise integer handling.**  
 
 | Type | Example |
 | --- | --- |
@@ -279,12 +280,13 @@ if ([])       console.log("truthy");   // runs! empty array is truthy
 
 ---
 
-## 9. Operators
+## 9. Operators ~ binary operators
+- a mathematical operation performed on two operands.
 
 ### Arithmetic Operators
 
 ```jsx
-let a = 10, b = 3;
+let a = 10, b = 3; // operands, but --> +,- is a operator
 
 console.log(a + b);   // 13   addition
 console.log(a - b);   // 7    subtraction
@@ -315,7 +317,8 @@ let z = ++x;   // x becomes 7 first, THEN z gets 7
 ### Assignment Operators
 
 ```jsx
-let x = 10;
+let x = 10; 
+// x += 5 ---> x = x + 5 
 x += 5;   // x = x + 5 → 15
 x -= 3;   // x = x - 3 → 12
 x *= 2;   // x = x * 2 → 24
